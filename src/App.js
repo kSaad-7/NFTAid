@@ -1,25 +1,62 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import { NFT } from "./NFT.js";
+import { NavBar } from "./NavBar.js";
+import { NFTModal } from "./NFTModal.js";
 
-function App() {
+export default function App() {
+  
+  const [data, setData] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [currentNFT, setCurrentNFT] = useState(null);
+
+  const API_URL = "https://jsonplaceholder.typicode.com/albums/1/photos";
+
+  const fetchData = async () => {
+    const response = await (await fetch(API_URL)).json();
+    setData(response);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  if (!data) return <h1>Loading...</h1>;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      style={{
+        display: "flex",
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
+      <NavBar></NavBar>
+      <div
+        style={{
+          display: "flex",
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        <NFT
+          data={data}
+          setShowModal={setShowModal}
+          setCurrentNFT={setCurrentNFT}
+        />
+        {showModal && (
+          <NFTModal
+            setCurrentNFT={setCurrentNFT}
+            setShowModal={setShowModal}
+            currentNFT={currentNFT}
+            showModal={showModal}
+          />
+        )}
+      </div>
     </div>
   );
 }
-
-export default App;
