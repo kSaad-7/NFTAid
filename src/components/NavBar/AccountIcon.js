@@ -27,8 +27,8 @@ export const AccountIcon = () => {
           alt="x"
           style={{
             margin: 5,
-            maxHeight: 60,
-            maxWidth: 60,
+            maxHeight: 50,
+            maxWidth: 50,
             borderRadius: 7,
           }}
         />

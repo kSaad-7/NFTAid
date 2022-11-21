@@ -1,62 +1,32 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import { NFT } from "./NFT.js";
-import { NavBar } from "./NavBar.js";
-import { NFTModal } from "./NFTModal.js";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  EmergencyAidScreen,
+  ArtistsScreen,
+  CharitiesScreen,
+  ProfileScreen,
+  MarketplaceScreen,
+  PageNotFound
+} from "./screens/index";
+
+// TO-DO
+// Make modal for account icon + how to organise styled buttons + clean up app files + navigation.
 
 export default function App() {
-  
-  const [data, setData] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [currentNFT, setCurrentNFT] = useState(null);
-
-  const API_URL = "https://jsonplaceholder.typicode.com/albums/1/photos";
-
-  const fetchData = async () => {
-    const response = await (await fetch(API_URL)).json();
-    setData(response);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  if (!data) return <h1>Loading...</h1>;
-
   return (
-    <div
-      style={{
-        display: "flex",
-        flex: 1,
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
-      <NavBar></NavBar>
-      <div
-        style={{
-          display: "flex",
-          flex: 1,
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-        }}
-      >
-        <NFT
-          data={data}
-          setShowModal={setShowModal}
-          setCurrentNFT={setCurrentNFT}
-        />
-        {showModal && (
-          <NFTModal
-            setCurrentNFT={setCurrentNFT}
-            setShowModal={setShowModal}
-            currentNFT={currentNFT}
-            showModal={showModal}
-          />
-        )}
-      </div>
+    <div className="App">
+      <Router>
+        <div className="container">
+          <Routes>
+            <Route path="/" element={<MarketplaceScreen />} />
+            <Route path="Profile" element={<ProfileScreen />} />
+            <Route path="Charities" element={<CharitiesScreen />} />
+            <Route path="Artists" element={<ArtistsScreen />} />
+            <Route path="EmergencyAid" element={<EmergencyAidScreen />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </div>
+      </Router>
     </div>
   );
 }
