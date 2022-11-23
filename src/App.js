@@ -18,7 +18,7 @@ export default function App() {
       <Router>
         <div className="container">
           <Routes>
-            <Route path="/" element={<MarketplaceScreen />} />
+            <Route path="/" element={<MarketplaceScreen />} /> 
             <Route path="Profile" element={<ProfileScreen />} />
             <Route path="Charities" element={<CharitiesScreen />} />
             <Route path="Artists" element={<ArtistsScreen />} />

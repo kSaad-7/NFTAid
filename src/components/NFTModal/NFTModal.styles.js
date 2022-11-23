@@ -30,10 +30,14 @@ export const Image = styled.img`
 `;
 
 export const CheckoutButton = styled(BackButton)`
-  background-color: #8554b3;
+  background: linear-gradient(
+    255deg,
+    rgba(121, 88, 150, 1) 0%,
+    rgba(47, 17, 71, 1) 100%
+  );
   color: white;
   transition: box-shadow 400ms cubic-bezier(0.17, 0.67, 0.57, 0.95);
   &:hover {
-    box-shadow: 0px 2px 5px black;
+    box-shadow: 0px 1px 5px black;
   }
 `;

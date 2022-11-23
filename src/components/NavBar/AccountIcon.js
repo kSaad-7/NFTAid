@@ -1,49 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
+import { StyledText, AccountIconContainer } from "./NavBar.styles";
+import { AccountMenu } from "./AccountMenu/AccountMenu";
 
 export const AccountIcon = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleIconHover = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
   return (
-    <div
-      style={{
-        // backgroundColor: "red",
-        display: "flex",
-        flex: 0.1,
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        padding: 10,
-      }}
-    >
-      <div
-        style={
-          {
-            //   backgroundColor: "blue",
-          }
-        }
-      >
+    <AccountIconContainer>
+      <div onMouseOver={handleIconHover} onMouse>
         <img
-          src={
-            "https://i.pinimg.com/originals/7c/02/d8/7c02d8361f7acd759f197fcb243b0800.jpg"
-          }
+          src={require("./AccountIcon.png")}
           alt="x"
           style={{
             margin: 5,
-            maxHeight: 50,
-            maxWidth: 50,
+            maxHeight: 48,
+            maxWidth: 48,
             borderRadius: 7,
           }}
         />
       </div>
-      <h6
-        style={{
-          backgroundColor: "#cccccc",
-          border: "1px solid black",
-          borderRadius: 20,
-          padding: 5,
-          margin: -5,
-        }}
-      >
-        0x456...345
-      </h6>
-    </div>
+      <StyledText>0x456...345</StyledText>
+      <AccountMenu
+        open={open}
+        anchorEl={anchorEl}
+        setAnchorEl={setAnchorEl}
+      />
+    </AccountIconContainer>
   );
 };

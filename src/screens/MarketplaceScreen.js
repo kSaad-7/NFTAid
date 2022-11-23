@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { NFT } from "../components/NFT/NFT.js";
 import { NavBar } from "../components/NavBar/NavBar";
 import { NFTModal } from "../components/NFTModal/NFTModal.js";
+import { Footer } from "../components/Footer/Footer.js";
 
 export const MarketplaceScreen = () => {
   const [data, setData] = useState(null);
+
   const [showModal, setShowModal] = useState(false);
   const [currentNFT, setCurrentNFT] = useState(null);
 
@@ -49,6 +51,7 @@ export const MarketplaceScreen = () => {
           flexDirection: "row",
           justifyContent: "space-between",
           flexWrap: "wrap",
+          marginBottom: 50,
         }}
       >
         <NFT
@@ -65,6 +68,7 @@ export const MarketplaceScreen = () => {
           />
         )}
       </div>
+      <Footer />
     </div>
   );
 };

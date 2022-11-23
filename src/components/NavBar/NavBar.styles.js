@@ -27,3 +27,22 @@ export const StyledNavLink = styled(NavLink)`
     font-size: 18px;
   }
 `;
+
+export const StyledText = styled.span`
+  background-color: #cccccc;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 5px;
+  margin: -5px;
+  font-size: 11px;
+  font-weight: bold;
+`;
+
+export const AccountIconContainer = styled.div`
+  display: flex;
+  flex: 0.1;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+`;
