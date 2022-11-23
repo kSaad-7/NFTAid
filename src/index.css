@@ -39,3 +39,6 @@ a:visited {
   transform: translateX(0px);
 }
 
+.accountIcon:hover {
+  cursor: pointer;
+}

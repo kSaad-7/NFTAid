@@ -12,7 +12,7 @@ export const AccountIcon = () => {
 
   return (
     <AccountIconContainer>
-      <div onMouseOver={handleIconHover} onMouse>
+      <div onMouseOver={handleIconHover} className="accountIcon">
         <img
           src={require("./AccountIcon.png")}
           alt="x"
@@ -25,11 +25,7 @@ export const AccountIcon = () => {
         />
       </div>
       <StyledText>0x456...345</StyledText>
-      <AccountMenu
-        open={open}
-        anchorEl={anchorEl}
-        setAnchorEl={setAnchorEl}
-      />
+      <AccountMenu open={open} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
     </AccountIconContainer>
   );
 };

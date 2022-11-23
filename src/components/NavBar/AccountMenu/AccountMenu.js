@@ -1,25 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import { StyledMenuItem } from "./AccountMenu.styles";
+import { useNavigate } from "react-router-dom";
 
-export const AccountModal = (props) => {
-
-  const handleClose = () => {
+export const AccountMenu = (props) => {
+  let navigate = useNavigate();
+  const handleClose = (page) => {
+    if (page === "/Profile") {
+      props.setAnchorEl(null);
+      navigate("/Profile");
+      return;
+    }
     props.setAnchorEl(null);
   };
 
   return (
     <div>
       <Menu
-        id="basic-menu"
         anchorEl={props.anchorEl}
         open={props.open}
         onClose={handleClose}
+        sx={{ backgroundColor: "rgba(0,0,0,0.2)" }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>Languages</MenuItem>
-        <MenuItem onClick={handleClose}>Change theme -O-</MenuItem>
-        <MenuItem onClick={handleClose}>Sign out</MenuItem>
+        <StyledMenuItem onClick={() => handleClose("/Profile")}>
+          Profile
+        </StyledMenuItem>
+        <StyledMenuItem onClick={handleClose}>Change wallet</StyledMenuItem>
+        <StyledMenuItem onClick={handleClose}>Languages</StyledMenuItem>
+        <StyledMenuItem onClick={handleClose}>Sign out</StyledMenuItem>
       </Menu>
     </div>
   );
