@@ -18,6 +18,7 @@ export const AccountMenu = (props) => {
     <div>
       <Menu
         anchorEl={props.anchorEl}
+        disableAutoFocusItem={true}
         open={props.open}
         onClose={handleClose}
         sx={{ backgroundColor: "rgba(0,0,0,0.2)" }}
