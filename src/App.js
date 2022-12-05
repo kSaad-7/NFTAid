@@ -6,7 +6,8 @@ import {
   CharitiesScreen,
   ProfileScreen,
   MarketplaceScreen,
-  PageNotFound
+  PageNotFound,
+  SignUpScreen,
 } from "./screens/index";
 
 // TO-DO
@@ -16,16 +17,15 @@ export default function App() {
   return (
     <div className="App">
       <Router>
-        <div className="container">
-          <Routes>
-            <Route path="/" element={<MarketplaceScreen />} /> 
-            <Route path="Profile" element={<ProfileScreen />} />
-            <Route path="Charities" element={<CharitiesScreen />} />
-            <Route path="Artists" element={<ArtistsScreen />} />
-            <Route path="EmergencyAid" element={<EmergencyAidScreen />} />
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
-        </div>
+        <Routes>
+          <Route path="/" element={<MarketplaceScreen />} />
+          <Route path="profile" element={<ProfileScreen />} />
+          <Route path="charities" element={<CharitiesScreen />} />
+          <Route path="artists" element={<ArtistsScreen />} />
+          <Route path="emergency-aid" element={<EmergencyAidScreen />} />
+          <Route path="sign-up" element={<SignUpScreen />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
       </Router>
     </div>
   );

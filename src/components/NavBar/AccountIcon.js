@@ -14,7 +14,7 @@ export const AccountIcon = () => {
     <AccountIconContainer>
       <div onMouseOver={handleIconHover} className="accountIcon">
         <img
-          src={require("./AccountIcon.png")}
+          src={require("../../images/AccountIcon.png")}
           alt="x"
           style={{
             margin: 5,

@@ -1,5 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
 import { CheckoutButton, BackButton } from "./NFTModal.styles";
 
 const contentStyles = {
@@ -101,12 +103,47 @@ export const NFTModal = (props) => {
         <span style={{ fontSize: 14, marginTop: 30, fontWeight: "bold" }}>
           Artist: Varez
         </span>
+        <Tooltip
+          title="Percent given to your chosen charity"
+          arrow={true}
+          slotProps={{
+            tooltip: {
+              sx: {
+                bgcolor: "lightgrey",
+                color: "black",
+                textAlign: "center",
+                fontSize: 13,
+                maxWidth: 130,
+                "& 	.MuiTooltip-arrow": {
+                  color: "lightgrey",
+                },
+              },
+            },
+          }}
+          TransitionComponent={Zoom}
+          placement={"top"}
+        >
+          <span
+            style={{
+              alignSelf: "flex-end",
+              fontSize: 12,
+              marginTop: 5,
+              color: "white",
+              fontWeight: "bold",
+              backgroundColor: "rgba(47, 17, 71, 0.8)",
+              padding: 7,
+              borderRadius: 20,
+            }}
+          >
+            30%
+          </span>
+        </Tooltip>
         <div
           className="button-div"
           style={{
             display: "flex",
             justifyContent: "space-around",
-            marginTop: 70,
+            marginTop: 40,
           }}
         >
           <BackButton darkOnHover onClick={handleModalClose}>
@@ -120,3 +157,4 @@ export const NFTModal = (props) => {
     </Modal>
   );
 };
+

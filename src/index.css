@@ -12,18 +12,31 @@ code {
     monospace;
 }
 
-/* For navigation links */
-
 a {
   text-decoration: none;
 }
 
-#pageNotFoundLink {
-  color: red;
+#terms_and_condtions {
+  color: #a26cd4;
+  cursor: pointer;
 }
 
-a:visited {
+#pageNotFoundLink {
   color: black;
+  font-size: 13px;
+}
+
+/* NavBar link styling */
+
+a.nav-bar:visited {
+  color: black;
+}
+
+a.active.nav-bar {
+  color: white;
+  background-color: #8554b3;
+  padding: 7px;
+  border-radius: 10px;
 }
 
 /* NFTModal */
@@ -37,8 +50,4 @@ a:visited {
 .ReactModal__Overlay--after-open {
   opacity: 1;
   transform: translateX(0px);
-}
-
-.accountIcon:hover {
-  cursor: pointer;
 }

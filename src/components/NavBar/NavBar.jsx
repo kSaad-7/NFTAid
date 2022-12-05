@@ -7,22 +7,33 @@ export const NavBar = () => {
     <NavBarContainer>
       <img
         alt="Logo"
-        src={require("./logo4.png")}
+        src={require("../../images/logo4.png")}
         style={{ width: 150, height: 75 }}
       />
-      <StyledNavLink to="/Artists">
+      <StyledNavLink className="nav-bar" to="/Artists">
         Artists
       </StyledNavLink>
-      <StyledNavLink to="/">
+      <StyledNavLink className="nav-bar" to="/">
         Marketplace
       </StyledNavLink>
-      <StyledNavLink to="/Profile">
+      <StyledNavLink className="nav-bar" to="/Profile">
         Profile
       </StyledNavLink>
-      <StyledNavLink to="/Charities">
+      <StyledNavLink
+        className="nav-bar"
+        to="/Charities"
+        style={({ isActive }) =>
+          isActive
+            ? {
+                color: "#fff",
+                background: "red",
+              }
+            : { color: "#545e6f", background: "#f0f0f0" }
+        }
+      >
         Charities
       </StyledNavLink>
-      <StyledNavLink to="/EmergencyAid">
+      <StyledNavLink className="nav-bar" to="/emergency-aid">
         Emergency aid
       </StyledNavLink>
       <AccountIcon></AccountIcon>
