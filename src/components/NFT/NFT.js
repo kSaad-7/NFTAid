@@ -13,7 +13,7 @@ export const NFT = ({ data, setShowModal, setCurrentNFT }) => {
     return (
       <NFTSection>
         <img
-          src={"https://lh3.googleusercontent.com/uQ4HuwrCBz3f-v0HntoNLd9oM_ycfFI2jFFY9e26I7BQ5eXBEoco1IpRTmKx-aWDDA4dOnaOUpoIb9F5H9uWH9frQ3TzyLRyovv9Gg"}
+          src={thumbnailUrl}
           style={{ borderRadius: "50%", width: 250, height: 250 }}
           alt="."
         />

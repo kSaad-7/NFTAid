@@ -12,20 +12,21 @@ export const StlyedContainer = styled.div`
 export const StlyedDiv = styled.div`
   display: flex;
   flex: 1;
-  width: 400px;
+  min-width: 400px;
+  max-width: 400px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
 `;
 
-export const SignUpDiv = styled.div`
+export const LoginDiv = styled.div`
   margin-top: 20;
   text-align: center;
   flex-direction: column;
   display: flex;
   flex: 1;
   width: 100%;
-  max-height: 88%;
+  max-height: 50%;
   border: 1px solid black;
   border-radius: 10px;
   padding-left: 60px;
@@ -51,7 +52,7 @@ export const CryptoIconsDiv = styled.div`
   margin-top: 20px;
 `;
 
-export const SignUpButton = styled.button`
+export const LoginButton = styled.button`
   background-color: #a26cd4;
   border-radius: 12px;
   border: 1px solid #555;

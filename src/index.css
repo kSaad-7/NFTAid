@@ -16,6 +16,10 @@ a {
   text-decoration: none;
 }
 
+.highlighted-summary {
+  color: #8a2be2;
+}
+
 #terms_and_condtions {
   color: #a26cd4;
   cursor: pointer;
@@ -27,6 +31,10 @@ a {
 }
 
 /* NavBar link styling */
+
+a.nav-bar {
+  color: black;
+}
 
 a.nav-bar:visited {
   color: black;

@@ -15,7 +15,23 @@ import {
 } from "./SignUpScreen.styles.js";
 import Divider from "@mui/material/Divider";
 
+//Firebase imports
+import { db } from "../../firebase.config";
+import { collection, addDoc } from "firebase/firestore";
+
+//Toast notifications
+import toast from "react-hot-toast";
+
+//useNavigate hook for navigating to different pages
+import { useNavigate } from "react-router-dom";
+
 export const SignUpScreen = () => {
+  //For navigating to marketplace once logged in
+  let navigate = useNavigate();
+
+  //Function to stimulate a delay
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
   const [signUpLog, setSignUpLog] = useState({
     fullName: "",
     DOB: "",
@@ -30,26 +46,58 @@ export const SignUpScreen = () => {
 
   const handleInput = (attribute, e) => {
     setSignUpLog({ ...signUpLog, [attribute]: e.target.value });
-    console.log(signUpLog);
   };
 
   const handleTermsChange = (e) => {
     setTermsCheck(e.target.checked);
   };
 
-  const validateData = () => termsCheck;
-
-  const handleCheckoutClick = () => {
-    const isValid = validateData();
-    if (!isValid) {
-      console.log("not valid");
-      setShowTermsHelperText(true);
-      return;
+  const saveNewUserFirestore = async (e) => {
+    try {
+      const newDocRef = await addDoc(collection(db, "users"), {
+        fullName: signUpLog.fullName,
+        DOB: signUpLog.DOB,
+        email: signUpLog.email,
+        userName: signUpLog.userName,
+        password: signUpLog.password,
+        wallet: signUpLog.wallet,
+      });
+      console.log("Document written with ID: ", newDocRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
     }
-    console.log("valid");
-    setShowTermsHelperText(false);
   };
 
+  const validateData = () =>
+    !signUpLog.fullName?.length ||
+    !signUpLog.email?.length ||
+    !signUpLog.DOB ||
+    !signUpLog.userName?.length ||
+    !signUpLog.password?.length ||
+    !signUpLog.wallet?.length;
+
+  const validateTermsCheck = () => {
+    if (!termsCheck) {
+      setShowTermsHelperText(true);
+    } else if (termsCheck) {
+      setShowTermsHelperText(false);
+    }
+  };
+
+  const handleSignUp = async () => {
+    validateTermsCheck();
+    const isDataNotValid = validateData();
+    if (isDataNotValid || !termsCheck) {
+      toast.error("Please fill out all fields correctly.");
+      return;
+    }
+    saveNewUserFirestore();
+    toast.success("You have successfully signed up.");
+    await delay(2500);
+    navigate("/login");
+  };
+
+  //User age constant
   const userAge = parseInt(signUpLog.DOB.toString().slice(0, 4));
 
   return (
@@ -126,7 +174,7 @@ export const SignUpScreen = () => {
               </div>
             )}
             <div className="sign-up-button-box">
-              <SignUpButton onClick={handleCheckoutClick}>Sign up</SignUpButton>
+              <SignUpButton onClick={handleSignUp}>Sign up</SignUpButton>
             </div>
             <DividerDiv>
               <Divider>OR</Divider>
