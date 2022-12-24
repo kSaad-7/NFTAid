@@ -5,3 +5,5 @@ export * from "./MarketplaceScreen";
 export * from "./ProfileScreen";
 export * from "./PageNotFound";
 export * from "./sign-up/SignUpScreen";
+export * from "./home/HomeScreen";
+export * from "./login/LoginScreen";

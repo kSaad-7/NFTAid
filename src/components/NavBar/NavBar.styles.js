@@ -39,3 +39,9 @@ export const AccountIconContainer = styled.div`
   align-items: center;
   padding: 10px;
 `;
+
+export const NFTAidLogo = styled.img`
+  width: 150px;
+  height: 75px;
+  cursor: pointer;
+`;

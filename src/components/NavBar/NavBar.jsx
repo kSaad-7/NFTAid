@@ -1,36 +1,27 @@
 import React from "react";
 import { AccountIcon } from "./AccountIcon";
-import { StyledNavLink, NavBarContainer } from "./NavBar.styles";
+import { StyledNavLink, NavBarContainer, NFTAidLogo } from "./NavBar.styles";
+import { useNavigate } from "react-router-dom";
 
 export const NavBar = () => {
+  let navigate = useNavigate();
   return (
     <NavBarContainer>
-      <img
+      <NFTAidLogo
         alt="Logo"
         src={require("../../images/logo4.png")}
-        style={{ width: 150, height: 75 }}
+        onClick={() => navigate("/")}
       />
-      <StyledNavLink className="nav-bar" to="/Artists">
+      <StyledNavLink className="nav-bar" to="/artists">
         Artists
       </StyledNavLink>
-      <StyledNavLink className="nav-bar" to="/">
+      <StyledNavLink className="nav-bar" to="/marketplace">
         Marketplace
       </StyledNavLink>
-      <StyledNavLink className="nav-bar" to="/Profile">
+      <StyledNavLink className="nav-bar" to="/profile">
         Profile
       </StyledNavLink>
-      <StyledNavLink
-        className="nav-bar"
-        to="/Charities"
-        style={({ isActive }) =>
-          isActive
-            ? {
-                color: "#fff",
-                background: "red",
-              }
-            : { color: "#545e6f", background: "#f0f0f0" }
-        }
-      >
+      <StyledNavLink className="nav-bar" to="/charities">
         Charities
       </StyledNavLink>
       <StyledNavLink className="nav-bar" to="/emergency-aid">
