@@ -25,38 +25,39 @@ export const LoginScreen = () => {
   let navigate = useNavigate();
 
   //Function to stimulate a delay
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const [loginLog, setLoginLog] = useState({
     email: "",
     password: "",
   });
 
+  const [currentUser, setCurrentUser] = useState(false); // use context provider in app
+
   const handleInput = (attribute, e) => {
     setLoginLog({ ...loginLog, [attribute]: e.target.value });
   };
 
   const handleLogin = async () => {
-    const q = query(
+    const loginQuery = query(
       collection(db, "users"),
-      where("email", "==", loginLog.email)
+      where("email", "==", loginLog.email),
+      where("password", "==", loginLog.password)
     );
-    const querySnapshot = await getDocs(q);
-    //If query returns no documents, show error toast.
+
+    const querySnapshot = await getDocs(loginQuery);
     if (querySnapshot.empty) {
       toast.error("Your email or password is wrong, please try again.");
+      return;
     }
-    querySnapshot.forEach(async (doc) => {
-      const data = doc.data(); //data object stored into "data"
-      if (data.password === loginLog.password) {
-        toast.success("You have successfully logged in.");
-        await delay(2100);
-        navigate("/marketplace");
-      } else {
-        toast.error("Your email or password is wrong, please try again.");
-        return;
-      }
-    });
+
+    const user = querySnapshot.docs[0].data();
+
+    if (!user) {
+      toast.error("Your email or password is wrong, please try again.");
+      return;
+    }
+    setCurrentUser(user);
+    navigate("/marketplace");
   };
 
   return (
