@@ -4,11 +4,30 @@ import { NavBar } from "../components/NavBar/NavBar";
 import { NFTModal } from "../components/NFTModal/NFTModal.js";
 import { Footer } from "../components/Footer/Footer.js";
 
+// import { db } from "../firebase.config";
+// import { collection, getDocs } from "firebase/firestore";
+
 export const MarketplaceScreen = () => {
   const [data, setData] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
   const [currentNFT, setCurrentNFT] = useState(null);
+
+  // const getNFTData = async (e) => {
+  //   try {
+  //     const allDocuments = await getDocs(collection(db, "nfts"));
+  //     const usersData = allDocuments.docs.map((doc) => doc.data());
+  //     setData(usersData);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getNFTData();
+  // }, []);
+
+  // !<img src={require("../../images/AccountIcon.png")}  alt="x" !/>
 
   const API_URL = "https://jsonplaceholder.typicode.com/albums/1/photos";
 

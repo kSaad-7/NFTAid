@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CustomTextField } from "../../components/CustomTextField/CustomTextField";
 import {
   LoginButton,
@@ -11,27 +11,42 @@ import {
   DividerDiv,
   CryptoIconsDiv,
 } from "./LoginScreen.styles";
+
 import Divider from "@mui/material/Divider";
-//Firebase imports
-import { db } from "../../firebase.config";
-import { collection, query, where, getDocs } from "firebase/firestore";
-//Toast notifications
 import toast from "react-hot-toast";
-//useNavigate hook for navigating to different pages
+
 import { useNavigate } from "react-router-dom";
 
-export const LoginScreen = () => {
-  //For navigating to marketplace once logged in
-  let navigate = useNavigate();
+import { db } from "../../firebase.config";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
-  //Function to stimulate a delay
+export const LoginScreen = () => {
+  const [currentUser, setCurrentUser] = useState(false); // !!!!! use context provider in app
 
   const [loginLog, setLoginLog] = useState({
     email: "",
     password: "",
   });
 
-  const [currentUser, setCurrentUser] = useState(false); // use context provider in app
+  const [data, setData] = useState([]);
+  console.log("🔹 ~ file: LoginScreen.js:32 ~ LoginScreen ~ data", data);
+  // ----------------- TEST WHEN READY -----------------
+
+  const getNFTData = async (e) => {
+    try {
+      const allDocuments = await getDocs(collection(db, "nfts"));
+      const usersData = allDocuments.docs.map((doc) => doc.data());
+      setData(usersData);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getNFTData();
+  }, []);
+
+  let navigate = useNavigate();
 
   const handleInput = (attribute, e) => {
     setLoginLog({ ...loginLog, [attribute]: e.target.value });

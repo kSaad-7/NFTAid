@@ -8,6 +8,8 @@ export const NFT = ({ data, setShowModal, setCurrentNFT }) => {
     setShowModal(true);
   };
 
+  // !<img src={require("../../images/AccountIcon.png")} alt="x"
+
   return data.map((NFT) => {
     const { thumbnailUrl, title } = NFT;
     return (

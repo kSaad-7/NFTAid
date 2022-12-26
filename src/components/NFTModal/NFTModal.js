@@ -3,6 +3,8 @@ import Modal from "react-modal";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import { CheckoutButton, BackButton } from "./NFTModal.styles";
+//temp
+import img from "../../images/Character_1.jpg";
 
 const contentStyles = {
   display: "flex",
@@ -25,6 +27,8 @@ export const NFTModal = (props) => {
   };
 
   Modal.setAppElement(document.getElementById("root"));
+
+  let x = img;
 
   return (
     <Modal
@@ -49,6 +53,7 @@ export const NFTModal = (props) => {
         </div>
         <img
           src={props.currentNFT.thumbnailUrl}
+          // src={"https://i.postimg.cc/SQ8LkQvd/Character-1.jpg"}
           style={{
             borderRadius: "10%",
             width: 200,
@@ -157,4 +162,3 @@ export const NFTModal = (props) => {
     </Modal>
   );
 };
-
