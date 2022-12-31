@@ -16,6 +16,12 @@ a {
   text-decoration: none;
 }
 
+a.user-icon-login {
+  font-weight: bold;
+  /* color: #8a2be2; */
+  color: blue;
+}
+
 .highlighted-summary {
   color: #8a2be2;
 }
@@ -52,10 +58,45 @@ a.active.nav-bar {
 .ReactModal__Overlay {
   opacity: 0;
   transform: translateY(100px);
-  transition: all 400ms cubic-bezier(0.17, 0.67, 0.57, 0.95);
+  transition: all 300ms cubic-bezier(0.17, 0.67, 0.57, 0.95);
 }
 
 .ReactModal__Overlay--after-open {
   opacity: 1;
   transform: translateX(0px);
+}
+
+/* Checkout button */
+
+.button-52 {
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 13px 20px 13px;
+  outline: 0;
+  border: 1px solid #60318c;
+  border-radius: 7px;
+  cursor: pointer;
+  position: relative;
+  color: white;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.button-52:after {
+  content: "";
+  /* background-color: #ffee70; */
+  background-color: #a26cd4;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  top: 3px;
+  left: 7px;
+  transition: 0.3s;
+  border-radius: 7px;
+}
+
+.button-52:hover:after {
+  top: 0px;
+  left: 0px;
 }

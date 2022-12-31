@@ -1,7 +1,11 @@
 import React from "react";
+import { useContext } from "react";
+import { NFTContext } from "../../Context.js";
 import { StyledButton, StyledCaption, NFTSection } from "./NFT.styles.js";
 
-export const NFT = ({ data, setShowModal, setCurrentNFT }) => {
+export const NFT = ({ data, setShowModal }) => {
+  const { setCurrentNFT } = useContext(NFTContext);
+
   //Clicked NFT is passed as parameter, sets it as the currentNFT and shows NFTMoal component
   const handleNFTClick = (selectedNFT) => {
     setCurrentNFT(selectedNFT);
@@ -16,7 +20,7 @@ export const NFT = ({ data, setShowModal, setCurrentNFT }) => {
           src={url}
           style={{
             border: "2px solid black",
-            borderRadius: "50%",
+            borderRadius: "30%",
             width: 250,
             height: 250,
           }}

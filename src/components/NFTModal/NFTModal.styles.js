@@ -20,6 +20,18 @@ export const BackButton = styled.button`
     `}
 `;
 
+export const ToastText = styled.span`
+  font-weight: 500;
+  font-size: 15px;
+  text-align: center;
+`;
+
+export const ToastLink = styled.a`
+  font-weight: bold;
+  font-size: 15px;
+  color: blue;
+`;
+
 export const Image = styled.img`
   border-dadius: 15%;
   width: 200px;

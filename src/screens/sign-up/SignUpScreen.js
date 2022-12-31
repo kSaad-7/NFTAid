@@ -62,6 +62,7 @@ export const SignUpScreen = () => {
         password: signUpLog.password,
         wallet: signUpLog.wallet,
         money: 1000,
+        nfts: [],
       });
       console.log("Document written with ID: ", newDocRef.id);
     } catch (e) {
@@ -70,12 +71,12 @@ export const SignUpScreen = () => {
   };
 
   const validateData = () =>
-    !signUpLog.fullName?.length ||
-    !signUpLog.email?.length ||
+    !signUpLog.fullName.length ||
+    !signUpLog.email.length ||
     !signUpLog.DOB ||
-    !signUpLog.userName?.length ||
-    !signUpLog.password?.length ||
-    !signUpLog.wallet?.length;
+    !signUpLog.userName.length ||
+    !signUpLog.password.length ||
+    !signUpLog.wallet.length;
 
   const validateTermsCheck = () => {
     if (!termsCheck) {
@@ -98,7 +99,7 @@ export const SignUpScreen = () => {
     navigate("/login");
   };
 
-  //User age constant
+  //User age
   const userAge = parseInt(signUpLog.DOB.toString().slice(0, 4));
 
   return (
