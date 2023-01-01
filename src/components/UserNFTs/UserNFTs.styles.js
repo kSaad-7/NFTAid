@@ -1,13 +1,18 @@
 import styled from "styled-components";
 
 export const StyledButton = styled.button`
-  background-color: #a26cd4;
+  // background-color: #a26cd4;
+  background-color: #f5dcff;
   border-radius: 12px;
   border: none;
   padding: 7px;
   min-width: 50px;
-  margin-left: 4px;
-  color: white;
+  margin-right: 4px;
+  margin: 10px;
+  // color: white;
+  font-weight: bold;
+  font-size: 12px;
+  color: black;
   cursor: pointer;
 `;
 
@@ -15,10 +20,12 @@ export const StyledCaption = styled.div`
   display: flex;
   flex: 1;
   justify-content: center;
+  color: white;
   align-items: center;
-  background-color: #f5dcff;
+  // background-color: #f5dcff;
+  background-color: #a26cd4;
   max-height: 40px;
-  margin: 0px 40px;
+  margin: 0px 70px;
   border-radius: 10px;
   cursor: pointer;
   transition: box-shadow 0.6s cubic-bezier(0.1, 1, 0.1, 1);
@@ -28,16 +35,10 @@ export const StyledCaption = styled.div`
 `;
 
 export const NFTSection = styled.div`
-  border-radius: 10px;
   min-width: 25%;
   text-align: center;
   align-items: center;
   justify-content: center;
-  margin: 50px 0px;
+  margin: 30px -20px;
   padding: 5px;
-  // transition: box-shadow 0.6s, transform 0.6s cubic-bezier(0.1, 1, 0.1, 1);
-  // &:hover {
-  //   box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.5);
-  //   transform: translateY(-5px);
-  // }
 `;

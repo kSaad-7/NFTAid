@@ -4,10 +4,12 @@ import { NFT } from "../components/NFT/NFT.js";
 import { NavBar } from "../components/NavBar/NavBar";
 import { NFTModal } from "../components/NFTModal/NFTModal.js";
 import { Footer } from "../components/Footer/Footer.js";
+import { UserNFTs } from "../components/UserNFTs/UserNFTs";
 
 import { db } from "../firebase.config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { UserContext } from "../Context.js";
+import { FamilyRestroomRounded } from "@mui/icons-material";
 
 // TODO : Put "onSale" field onto every nft, change on purchase
 // TODO : Querey NFTs "onSale = true"
@@ -18,6 +20,7 @@ import { UserContext } from "../Context.js";
 export const MarketplaceScreen = () => {
   const [data, setData] = useState(null);
   const [usersNFTs, setUsersNFTs] = useState(null);
+  const [numberOfUserNFTs, setNumberOfUserNFTs] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [currentNFT, setCurrentNFT] = useState(null);
 
@@ -25,19 +28,26 @@ export const MarketplaceScreen = () => {
 
   const getNFTData = async () => {
     try {
-      const allDocuments = await getDocs(collection(db, "nfts"));
+      const nftsRef = collection(db, "nfts");
+      const NFTquery = query(nftsRef, where("onSale", "==", true));
+      const allDocuments = await getDocs(NFTquery);
       const nftData = allDocuments.docs.map((doc) => ({
         docId: doc.id,
         ...doc.data(),
       }));
       setData(nftData);
 
+      let count = 0;
       if (currentUser) {
         const allUserNFTs = nftData.filter(
           (nft) => nft.currentOwner?.id === currentUser?.docId
         );
         setUsersNFTs(allUserNFTs);
         console.log("User NFTs", allUserNFTs);
+        for (let i = 0; i < allUserNFTs.length; i++) {
+          count += 1;
+        }
+        setNumberOfUserNFTs(count);
       }
     } catch (e) {
       console.log(e);
@@ -68,9 +78,35 @@ export const MarketplaceScreen = () => {
         display: "flex",
         flex: 1,
         flexDirection: "column",
+        textAlign: "center",
       }}
     >
       <NavBar />
+      {currentUser && (
+        <div>
+          <h5>Your NFTS ({numberOfUserNFTs})</h5>
+          <div
+            style={{
+              display: "flex",
+              flex: 1,
+              flexDirection: "row",
+              overflowX: "scroll",
+              whiteSpace: "nowrap",
+              marginBottom: 50,
+            }}
+          >
+            <UserNFTs usersNFTs={usersNFTs} setShowModal={setShowModal} />
+          </div>
+        </div>
+      )}
+
+      <a
+        href="#marketplace"
+        id="marketplace-scrolling-text"
+        style={{ marginTop: 30 }}
+      >
+        Marketplace
+      </a>
       <div
         style={{
           display: "flex",
@@ -80,6 +116,7 @@ export const MarketplaceScreen = () => {
           flexWrap: "wrap",
           marginBottom: 50,
         }}
+        id="marketplace"
       >
         <NFT
           data={data}

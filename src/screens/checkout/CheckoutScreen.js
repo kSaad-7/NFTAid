@@ -185,7 +185,7 @@ export const CheckoutScreen = () => {
               </h5>
             </TermsDiv>
             <div className="sign-up-button-box">
-              <button class="button-52" onClick={handleCheckout}>
+              <button class="button" onClick={handleCheckout}>
                 Purchase
               </button>
             </div>

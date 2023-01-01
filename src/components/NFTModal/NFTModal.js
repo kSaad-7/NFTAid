@@ -28,6 +28,7 @@ export const NFTModal = (props) => {
     setCurrentOwnerUserName,
     currentOwnerUserName,
   } = useContext(NFTContext);
+
   const { currentUser } = useContext(UserContext);
 
   let navigate = useNavigate();

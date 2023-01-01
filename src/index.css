@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -12,13 +16,22 @@ code {
     monospace;
 }
 
+#marketplace-scrolling-text {
+  font-weight: bold;
+  font-size: 15px;
+  color: black;
+}
+
+#marketplace-scrolling-text:hover {
+  color: #8d40d5;
+}
+
 a {
   text-decoration: none;
 }
 
 a.user-icon-login {
   font-weight: bold;
-  /* color: #8a2be2; */
   color: blue;
 }
 
@@ -39,10 +52,6 @@ a.user-icon-login {
 /* NavBar link styling */
 
 a.nav-bar {
-  color: black;
-}
-
-a.nav-bar:visited {
   color: black;
 }
 
@@ -82,21 +91,84 @@ a.active.nav-bar {
   background-color: rgba(0, 0, 0, 0);
 }
 
-.button-52:after {
+/*Checkout button */
+
+.fifth {
+  border-color: purple;
+  font-weight: 700;
+  width: 50%;
+  height: 200%;
+  border: 2px solid purple;
+  border-radius: 20px;
+  cursor: pointer;
+  color: purple;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 400ms ease-in-out;
+}
+.fifth:after {
   content: "";
-  /* background-color: #ffee70; */
-  background-color: #a26cd4;
-  width: 100%;
-  z-index: -1;
   position: absolute;
+  display: block;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
   height: 100%;
-  top: 3px;
-  left: 7px;
-  transition: 0.3s;
-  border-radius: 7px;
+  background: purple;
+  z-index: -1;
+  transition: width 400ms ease-in-out;
+}
+.fifth:hover {
+  color: #fff;
+}
+.fifth:hover:after {
+  width: 110%;
 }
 
-.button-52:hover:after {
-  top: 0px;
-  left: 0px;
+.button {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 10rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  font-size: 1rem;
+  letter-spacing: 0.15rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.button:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #5c045c;
+  border-radius: 10rem;
+  z-index: -2;
+}
+.button:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: #ac11ac;
+  transition: all 0.3s;
+  border-radius: 10rem;
+  z-index: -1;
+}
+.button:hover {
+  color: #fff;
+}
+.button:hover:before {
+  width: 100%;
 }

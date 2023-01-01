@@ -11,6 +11,7 @@ import {
   HomeScreen,
   LoginScreen,
   CheckoutScreen,
+  SellNftScreen,
 } from "./screens/index";
 import { Toaster } from "react-hot-toast";
 import { NFTContext, UserContext } from "./Context.js";
@@ -47,6 +48,7 @@ export default function App() {
               <Route path="/" element={<HomeScreen />} />
               <Route path="marketplace" element={<MarketplaceScreen />} />
               <Route path="marketplace/checkout" element={<CheckoutScreen />} />
+              <Route path="marketplace/sell-nft" element={<SellNftScreen />} />
               <Route path="profile" element={<ProfileScreen />} />
               <Route path="charities" element={<CharitiesScreen />} />
               <Route path="artists" element={<ArtistsScreen />} />
