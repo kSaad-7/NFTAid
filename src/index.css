@@ -91,7 +91,7 @@ a.active.nav-bar {
   background-color: rgba(0, 0, 0, 0);
 }
 
-/*Checkout button */
+/*Sell NFT button */
 
 .fifth {
   border-color: purple;
@@ -118,7 +118,7 @@ a.active.nav-bar {
   height: 100%;
   background: purple;
   z-index: -1;
-  transition: width 400ms ease-in-out;
+  transition: width 200ms ease-in-out;
 }
 .fifth:hover {
   color: #fff;
@@ -126,6 +126,8 @@ a.active.nav-bar {
 .fifth:hover:after {
   width: 110%;
 }
+
+/*Checkout button */
 
 .button {
   display: inline-block;

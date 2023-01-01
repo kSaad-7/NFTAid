@@ -9,7 +9,6 @@ import { UserNFTs } from "../components/UserNFTs/UserNFTs";
 import { db } from "../firebase.config";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { UserContext } from "../Context.js";
-import { FamilyRestroomRounded } from "@mui/icons-material";
 
 // TODO : Put "onSale" field onto every nft, change on purchase
 // TODO : Querey NFTs "onSale = true"
@@ -20,6 +19,7 @@ import { FamilyRestroomRounded } from "@mui/icons-material";
 export const MarketplaceScreen = () => {
   const [data, setData] = useState(null);
   const [usersNFTs, setUsersNFTs] = useState(null);
+  const [marketplaceNFTS, setMarketplaceNFTS] = useState(null);
   const [numberOfUserNFTs, setNumberOfUserNFTs] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [currentNFT, setCurrentNFT] = useState(null);
@@ -28,19 +28,25 @@ export const MarketplaceScreen = () => {
 
   const getNFTData = async () => {
     try {
+      // all nfts
       const nftsRef = collection(db, "nfts");
-      const NFTquery = query(nftsRef, where("onSale", "==", true));
-      const allDocuments = await getDocs(NFTquery);
+      const allDocuments = await getDocs(nftsRef);
       const nftData = allDocuments.docs.map((doc) => ({
         docId: doc.id,
         ...doc.data(),
       }));
       setData(nftData);
 
+      // marketplace nfts
+      const marketplaceNFTS = nftData.filter((nft) => nft.onSale === true);
+      setMarketplaceNFTS(marketplaceNFTS);
+
+      // user nfts
       let count = 0;
       if (currentUser) {
         const allUserNFTs = nftData.filter(
-          (nft) => nft.currentOwner?.id === currentUser?.docId
+          (nft) =>
+            nft.currentOwner?.id === currentUser?.docId && nft.onSale === false
         );
         setUsersNFTs(allUserNFTs);
         console.log("User NFTs", allUserNFTs);
@@ -82,7 +88,7 @@ export const MarketplaceScreen = () => {
       }}
     >
       <NavBar />
-      {currentUser && (
+      {usersNFTs && (
         <div>
           <h5>Your NFTS ({numberOfUserNFTs})</h5>
           <div
@@ -119,7 +125,7 @@ export const MarketplaceScreen = () => {
         id="marketplace"
       >
         <NFT
-          data={data}
+          data={marketplaceNFTS}
           setShowModal={setShowModal}
           setCurrentNFT={setCurrentNFT}
         />
