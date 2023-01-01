@@ -3,6 +3,8 @@ import Modal from "react-modal";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import { CheckoutButton, BackButton } from "./NFTModal.styles";
+//temp
+import img from "../../images/Character_1.jpg";
 
 const contentStyles = {
   display: "flex",
@@ -26,6 +28,8 @@ export const NFTModal = (props) => {
 
   Modal.setAppElement(document.getElementById("root"));
 
+  let x = img;
+
   return (
     <Modal
       isOpen={props.showModal}
@@ -48,7 +52,8 @@ export const NFTModal = (props) => {
           </span>
         </div>
         <img
-          src={props.currentNFT.thumbnailUrl}
+          src={props.currentNFT.url}
+          // src={"https://i.postimg.cc/SQ8LkQvd/Character-1.jpg"}
           style={{
             borderRadius: "10%",
             width: 200,
@@ -78,7 +83,7 @@ export const NFTModal = (props) => {
           }}
         >
           <span style={{ fontSize: 35, fontWeight: "bold", marginBottom: 20 }}>
-            {props.currentNFT.title.slice(0, 4)}
+            {props.currentNFT.title}
           </span>
         </div>
         <div
@@ -97,11 +102,13 @@ export const NFTModal = (props) => {
             </span>
           </h1>
         </div>
+        {/* !! Look at screenshot at desktop and do this !! */}
         <span style={{ fontSize: 16, marginTop: 30, fontWeight: "bold" }}>
           Current owner: sKarma77
         </span>
+        {/* !! Look at screenshot at desktop and do this !! */}
         <span style={{ fontSize: 14, marginTop: 30, fontWeight: "bold" }}>
-          Artist: Varez
+          Artist: {props.currentNFT.artist}
         </span>
         <Tooltip
           title="Percent given to your chosen charity"
@@ -157,4 +164,3 @@ export const NFTModal = (props) => {
     </Modal>
   );
 };
-

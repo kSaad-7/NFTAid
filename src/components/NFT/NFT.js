@@ -9,16 +9,21 @@ export const NFT = ({ data, setShowModal, setCurrentNFT }) => {
   };
 
   return data.map((NFT) => {
-    const { thumbnailUrl, title } = NFT;
+    const { url, title } = NFT;
     return (
       <NFTSection>
         <img
-          src={thumbnailUrl}
-          style={{ borderRadius: "50%", width: 250, height: 250 }}
+          src={url}
+          style={{
+            border: "2px solid black",
+            borderRadius: "50%",
+            width: 250,
+            height: 250,
+          }}
           alt="."
         />
         <StyledCaption onClick={() => handleNFTClick(NFT)}>
-          <h5>{title.slice(0, 4)}</h5>
+          <h5>{title}</h5>
           <StyledButton>Buy now</StyledButton>
         </StyledCaption>
       </NFTSection>

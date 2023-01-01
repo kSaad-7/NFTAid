@@ -17,6 +17,7 @@ export const HomeScreen = () => {
           display: "flex",
           flexDirection: "row",
           flex: 1,
+          marginBottom: -50,
         }}
       >
         <div style={{ flex: 1 }}>
@@ -76,7 +77,7 @@ export const HomeScreen = () => {
       </div>
       <LastSection>
         <LoginSpan>
-          <ClickToLogin href="login">
+          <ClickToLogin href="sign-up">
             Click me to sign up to NFTAid!
           </ClickToLogin>
         </LoginSpan>

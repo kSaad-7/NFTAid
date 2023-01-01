@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CustomTextField } from "../../components/CustomTextField/CustomTextField";
 import {
   LoginButton,
@@ -11,52 +11,97 @@ import {
   DividerDiv,
   CryptoIconsDiv,
 } from "./LoginScreen.styles";
+
 import Divider from "@mui/material/Divider";
-//Firebase imports
-import { db } from "../../firebase.config";
-import { collection, query, where, getDocs } from "firebase/firestore";
-//Toast notifications
 import toast from "react-hot-toast";
-//useNavigate hook for navigating to different pages
+
 import { useNavigate } from "react-router-dom";
 
-export const LoginScreen = () => {
-  //For navigating to marketplace once logged in
-  let navigate = useNavigate();
+import { db } from "../../firebase.config";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
+  doc,
+} from "firebase/firestore";
 
-  //Function to stimulate a delay
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+export const LoginScreen = () => {
+  const [currentUser, setCurrentUser] = useState(false); // !!!!! use context provider in app
 
   const [loginLog, setLoginLog] = useState({
     email: "",
     password: "",
   });
 
+  const [data, setData] = useState([]);
+  console.log("🔹 ~ file: LoginScreen.js:32 ~ LoginScreen ~ data", data);
+  // ----------------- TEST WHEN READY -----------------
+
+  const getNFTData = async (e) => {
+    try {
+      const allDocuments = await getDocs(collection(db, "nfts"));
+      const usersData = allDocuments.docs.map((doc) => doc.data());
+      setData(usersData);
+      console.log("Adding new nft");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getNFTData();
+  }, []);
+
+  // --------------------------------------------
+  const addNewNFT = async () => {
+    const userRef = doc(db, "users", "NaIypLebb1d8QNE3EZP6");
+    try {
+      const newDocRef = await addDoc(collection(db, "nfts"), {
+        artist: "London2",
+        currentOwner: userRef,
+        title: "SaxonZ",
+        price: 300,
+        url: "https://i.postimg.cc/G2cpVCHc/Character-9.jpg",
+      });
+      console.log("Document written with ID: ", newDocRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+
+  const handleNewNFT = async () => {
+    addNewNFT();
+  };
+  // --------------------------------------------
+  let navigate = useNavigate();
+
   const handleInput = (attribute, e) => {
     setLoginLog({ ...loginLog, [attribute]: e.target.value });
   };
 
   const handleLogin = async () => {
-    const q = query(
+    const loginQuery = query(
       collection(db, "users"),
-      where("email", "==", loginLog.email)
+      where("email", "==", loginLog.email),
+      where("password", "==", loginLog.password)
     );
-    const querySnapshot = await getDocs(q);
-    //If query returns no documents, show error toast.
+
+    const querySnapshot = await getDocs(loginQuery);
     if (querySnapshot.empty) {
       toast.error("Your email or password is wrong, please try again.");
+      return;
     }
-    querySnapshot.forEach(async (doc) => {
-      const data = doc.data(); //data object stored into "data"
-      if (data.password === loginLog.password) {
-        toast.success("You have successfully logged in.");
-        await delay(2100);
-        navigate("/marketplace");
-      } else {
-        toast.error("Your email or password is wrong, please try again.");
-        return;
-      }
-    });
+
+    const user = querySnapshot.docs[0].data();
+
+    if (!user) {
+      toast.error("Your email or password is wrong, please try again.");
+      return;
+    }
+    setCurrentUser(user);
+    navigate("/marketplace");
   };
 
   return (
@@ -69,6 +114,7 @@ export const LoginScreen = () => {
         />
         <LoginDiv>
           <h4>Login</h4>
+          <button onClick={handleNewNFT}>Click for new nft</button>
           <InputsDiv>
             <CustomTextField
               value={loginLog.email}
