@@ -9,15 +9,19 @@ import {
   CheckoutDiv,
   BottomSectionDiv,
   TermsDiv,
+  CancelSaleButton,
   DividerDiv,
   SettingsInfoDiv,
   DollarPrice,
   SettingDiv,
   NFTDiv,
   ETHText,
+  ConfirmEditButton,
   PriceInput,
 } from "./SellNftScreen.styles.js";
 import Divider from "@mui/material/Divider";
+
+import { CancelSaleModal } from "../../components/CancelSaleModal/CancelSaleModal.js";
 
 import toast from "react-hot-toast";
 
@@ -26,17 +30,26 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { NFTContext, UserContext } from "../../Context";
 
 import { db } from "../../firebase.config";
-import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
+
+// TODO : Get previous values through currentNFT.x and use ternary operater to show them (previousValue ? previousValue : 20)
+//  TODO : Fix ethPrice, saves as string instead of number.
 
 export const SellNftScreen = () => {
   const [termsCheck, setTermsCheck] = useState(false);
   const [ethPrice, setEthPrice] = useState(null);
   const [charityPercent, setCharityPercent] = useState(20);
 
+  const [showCancelModal, setShowCancelModal] = useState(false);
+
   const navigate = useNavigate();
+
   //Getting context
   const { currentNFT } = useContext(NFTContext);
-  const { currentUser } = useContext(UserContext);
+
+  const handleCancelSaleClick = () => {
+    setShowCancelModal(true);
+  };
 
   const handlePriceChange = (e) => {
     setEthPrice(e.target.value);
@@ -51,37 +64,29 @@ export const SellNftScreen = () => {
   };
 
   const validateSale = () => {
-    if (!ethPrice || !termsCheck || ethPrice < 0.01) {
+    if (!ethPrice || !termsCheck || ethPrice < 0.0001) {
       return false;
     }
     return true;
   };
 
+  const ethDollarRatio = 991;
+  const dollarPrice = ethPrice * ethDollarRatio;
+  const price = dollarPrice.toFixed(2);
+
   const updateBackend = async () => {
-    // const currentNFTRef = doc(db, "nfts", `${currentNFT.docId}`);
-    // const currentUserRef = doc(db, "users", `${currentUser.docId}`);
-    // const currentOwnerRef = currentNFT.currentOwner;
+    const currentNFTRef = doc(db, "nfts", `${currentNFT.docId}`);
 
-    // //update NFT document with new owner
-    // await updateDoc(currentNFTRef, {
-    //   currentOwner: currentUserRef,
-    // });
-
-    // //update old owners document, delete nft from -> nfts[]
-    // if (currentOwnerRef) {
-    //   await updateDoc(currentOwnerRef, {
-    //     nfts: arrayRemove(currentNFTRef),
-    //   });
-    // }
-
-    // //update currentUser document, add new nft -> nft[]
-    // await updateDoc(currentUserRef, {
-    //   nfts: arrayUnion(currentNFTRef),
-    // });
-    console.log("updateBackend");
+    //updating nft fields
+    await updateDoc(currentNFTRef, {
+      onSale: true,
+      percentToCharity: charityPercent,
+      ethPrice: Number(ethPrice),
+      price: Number(price),
+    });
   };
 
-  const toastMessage = (
+  const toastSellMessage = (
     <span>
       You successfully put
       <span style={{ color: "purple" }}> {currentNFT.title}</span> on the
@@ -89,19 +94,20 @@ export const SellNftScreen = () => {
     </span>
   );
 
-  const handleCheckout = () => {
+  const toastEditMessage = <span>Changes have been saved.</span>;
+
+  const handleSellNft = () => {
     const isValid = validateSale();
     if (isValid) {
       updateBackend();
-      toast.success(toastMessage);
+      toast.success(
+        currentNFT.onSale === true ? toastEditMessage : toastSellMessage
+      );
       navigate("/marketplace");
       return;
     }
     toast.error("Please fill in all the fields correctly.");
   };
-
-  const ethDollarRatio = 991;
-  const dollarPrice = ethPrice * ethDollarRatio;
 
   return (
     <StlyedContainer>
@@ -165,7 +171,18 @@ export const SellNftScreen = () => {
                 )}
               </SettingDiv>
               <div style={{ display: "flex", flexDirection: "column" }}>
-                <h4>{charityPercent}% to chosen charity</h4>
+                <h4>
+                  <span
+                    style={{
+                      fontSize: 17,
+                      fontWeight: "bold",
+                      color: "purple",
+                    }}
+                  >
+                    {charityPercent}%
+                  </span>{" "}
+                  will go to charity
+                </h4>
                 <Slider
                   sx={{
                     color: "purple",
@@ -196,10 +213,27 @@ export const SellNftScreen = () => {
               </h5>
             </TermsDiv>
             <div className="sign-up-button-box">
-              <button class="fifth" onClick={handleCheckout}>
-                Sell NFT
-              </button>
+              {currentNFT.onSale === true && (
+                <CancelSaleButton onClick={handleCancelSaleClick}>
+                  Cancel sale
+                </CancelSaleButton>
+              )}
+              {currentNFT.onSale === true ? (
+                <ConfirmEditButton onClick={handleSellNft}>
+                  Confirm edit
+                </ConfirmEditButton>
+              ) : (
+                <button className="fifth" onClick={handleSellNft}>
+                  Sell NFT
+                </button>
+              )}
             </div>
+            {showCancelModal && (
+              <CancelSaleModal
+                showCancelModal={showCancelModal}
+                setShowCancelModal={setShowCancelModal}
+              />
+            )}
           </BottomSectionDiv>
         </CheckoutDiv>
       </StlyedDiv>

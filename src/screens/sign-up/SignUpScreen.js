@@ -61,7 +61,7 @@ export const SignUpScreen = () => {
         userName: signUpLog.userName,
         password: signUpLog.password,
         wallet: signUpLog.wallet,
-        money: 1000,
+        money: 10000,
         nfts: [],
       });
       console.log("Document written with ID: ", newDocRef.id);

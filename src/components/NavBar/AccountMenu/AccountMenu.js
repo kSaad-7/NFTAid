@@ -1,17 +1,36 @@
-import React from "react";
+import React, { useContext } from "react";
 import Menu from "@mui/material/Menu";
 import { StyledMenuItem } from "./AccountMenu.styles";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../../Context";
 
 export const AccountMenu = (props) => {
   let navigate = useNavigate();
-  const handleClose = (page) => {
-    if (page === "/Profile") {
+
+  const { setCurrentUser, currentUser } = useContext(UserContext);
+
+  const handleClose = (event) => {
+    if (event === "/Profile") {
       props.setAnchorEl(null);
       navigate("/Profile");
       return;
+    } else if (event === "Sign out") {
+      setCurrentUser(null);
+      props.setAnchorEl(null);
+      return;
     }
     props.setAnchorEl(null);
+  };
+
+  const handleSignIn = () => {
+    navigate("/login");
+    return;
+  };
+
+  const handleSignOut = () => {
+    setCurrentUser(null);
+    props.setAnchorEl(null);
+    return;
   };
 
   return (
@@ -28,7 +47,11 @@ export const AccountMenu = (props) => {
         </StyledMenuItem>
         <StyledMenuItem onClick={handleClose}>Change wallet</StyledMenuItem>
         <StyledMenuItem onClick={handleClose}>Languages</StyledMenuItem>
-        <StyledMenuItem onClick={handleClose}>Sign out</StyledMenuItem>
+        {currentUser ? (
+          <StyledMenuItem onClick={handleSignOut}>Log out</StyledMenuItem>
+        ) : (
+          <StyledMenuItem onClick={handleSignIn}>Login</StyledMenuItem>
+        )}
       </Menu>
     </div>
   );

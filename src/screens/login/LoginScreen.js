@@ -112,6 +112,10 @@ export const LoginScreen = () => {
               Dont have an account?{"  "}
               <LoginText href="sign-up">Sign up</LoginText>
             </span>
+            <span style={{ fontSize: 13 }}>
+              Click here to browse the marketplace
+              <LoginText href="marketplace">Marketplace</LoginText>
+            </span>
           </InputsDiv>
         </LoginDiv>
       </StlyedDiv>

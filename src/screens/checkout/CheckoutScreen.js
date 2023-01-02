@@ -27,6 +27,9 @@ import { NFTContext, UserContext } from "../../Context";
 import { db } from "../../firebase.config";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 
+//  TODO : Change price dollar to toFixed(2).
+//  TODO : Other UI changes
+
 export const CheckoutScreen = () => {
   const [termsCheck, setTermsCheck] = useState(false);
 
@@ -55,9 +58,10 @@ export const CheckoutScreen = () => {
     const currentUserRef = doc(db, "users", `${currentUser.docId}`);
     const currentOwnerRef = currentNFT.currentOwner;
 
-    //update NFT document with new owner
+    //update NFT document with new owner + onSale = false
     await updateDoc(currentNFTRef, {
       currentOwner: currentUserRef,
+      onSale: false,
     });
 
     //update old owners document, delete nft from -> nfts[]

@@ -1,12 +1,17 @@
 import React from "react";
+
 import { useContext } from "react";
-import { NFTContext } from "../../Context.js";
+import { NFTContext, UserContext } from "../../Context.js";
+
 import { StyledButton, StyledCaption, NFTSection } from "./NFT.styles.js";
 
 export const NFT = ({ data, setShowModal }) => {
   const { setCurrentNFT } = useContext(NFTContext);
+  const { currentUser } = useContext(UserContext);
 
-  //Clicked NFT is passed as parameter, sets it as the currentNFT and shows NFTMoal component
+  const isUserOwner = (NFT) =>
+    currentUser && currentUser.docId === NFT.currentOwner?.id;
+
   const handleNFTClick = (selectedNFT) => {
     setCurrentNFT(selectedNFT);
     setShowModal(true);
@@ -28,7 +33,11 @@ export const NFT = ({ data, setShowModal }) => {
         />
         <StyledCaption onClick={() => handleNFTClick(NFT)}>
           <h5>{title}</h5>
-          <StyledButton>Buy now</StyledButton>
+          {isUserOwner(NFT) ? (
+            <StyledButton edit>View NFT</StyledButton>
+          ) : (
+            <StyledButton>Buy now</StyledButton>
+          )}
         </StyledCaption>
       </NFTSection>
     );

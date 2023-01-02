@@ -7,14 +7,11 @@ import { Footer } from "../components/Footer/Footer.js";
 import { UserNFTs } from "../components/UserNFTs/UserNFTs";
 
 import { db } from "../firebase.config";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { UserContext } from "../Context.js";
 
-// TODO : Put "onSale" field onto every nft, change on purchase
-// TODO : Querey NFTs "onSale = true"
-// ! TODO : Make new state, userNfts, queries "nfts" where currentOwner = currentUser
-// TODO : Create new section above <NFT/> where users NFTs are displayed. (conditonally render the secition on if user logged in)
-// TODO : New section = Same as NFT, .map() but "Sell now" instead of "Buy now"
+//  TODO : Make "Your nfts" section more noticiable
+//  TODO : "Edit now" for NFTs that are owned by user, on marketplace
 
 export const MarketplaceScreen = () => {
   const [data, setData] = useState(null);
@@ -88,7 +85,7 @@ export const MarketplaceScreen = () => {
       }}
     >
       <NavBar />
-      {usersNFTs && (
+      {usersNFTs && currentUser && (
         <div>
           <h5>Your NFTS ({numberOfUserNFTs})</h5>
           <div
@@ -99,6 +96,7 @@ export const MarketplaceScreen = () => {
               overflowX: "scroll",
               whiteSpace: "nowrap",
               marginBottom: 50,
+              backgroundColor: "#444",
             }}
           >
             <UserNFTs usersNFTs={usersNFTs} setShowModal={setShowModal} />

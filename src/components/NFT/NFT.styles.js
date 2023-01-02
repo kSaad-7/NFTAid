@@ -1,13 +1,18 @@
 import styled from "styled-components";
 
 export const StyledButton = styled.button`
-  background-color: #a26cd4;
+  background-color: ${(props) => (props.edit ? "red" : "#a26cd4")};
+  background: ${(props) =>
+    props.edit
+      ? "linear-gradient(135deg,rgba(255, 217, 41, 1) 82%,rgba(49, 17, 89, 1) 10%)"
+      : "linear-gradient(135deg,rgba(255, 217, 41, 1) 15%, #431775 12%)"};
   border-radius: 12px;
+  font-weight: bold;
   border: none;
   padding: 7px;
   min-width: 50px;
   margin-left: 4px;
-  color: white;
+  color: ${(props) => (props.edit ? "black" : "white")};
   cursor: pointer;
 `;
 

@@ -19,19 +19,19 @@ export const UserNFTs = ({ usersNFTs }) => {
     const { url, title } = NFT;
     return (
       <NFTSection>
-        <h5>{title}</h5>
+        <h5 style={{ color: "white" }}>{title}</h5>
         <img
           src={url}
           style={{
             border: "2px solid black",
             borderRadius: "50%",
-            width: 100,
-            height: 100,
+            width: 150,
+            height: 150,
           }}
           alt="."
         />
         <StyledCaption onClick={() => handleNFTClick(NFT)}>
-          <StyledButton>Sell now</StyledButton>
+          <StyledButton>Sell NFT</StyledButton>
         </StyledCaption>
       </NFTSection>
     );

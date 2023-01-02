@@ -63,19 +63,37 @@ export const DividerDiv = styled.div`
   margin-bottom: 20px;
 `;
 
-export const CheckoutButton = styled.button`
-  background-color: #a26cd4;
+export const CancelSaleButton = styled.button`
+  background-color: red;
   border-radius: 12px;
   border: 1px solid #555;
   padding: 10px;
-  min-width: 130px;
-  min-height: 30px;
+  min-width: 90px;
+  min-height: 15px;
   color: #6a4091;
   cursor: pointer;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 12px;
   color: white;
-  margin-top: 10px;
+  margin-right: 20px;
+`;
+
+export const ConfirmEditButton = styled.button`
+  background: linear-gradient(
+    135deg,
+    rgba(255, 217, 41, 1) 80%,
+    rgba(49, 17, 89, 1) 80%
+  );
+  border-radius: 7px;
+  border: 1px solid #555;
+  padding: 10px;
+  width: 150px;
+  height: 40px;
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
+  transition: box-shadow 200ms cubic-bezier(0.17, 0.67, 0.57, 0.95);
 `;
 
 export const SettingsInfoDiv = styled.div`
@@ -91,7 +109,7 @@ export const SettingDiv = styled.div`
 
 export const PriceInput = styled.input`
   margin-left: 10px;
-  width: 15%;
+  width: 10%;
   height: 40%;
   border-radius: 5px;
   border: 1px solid black;
@@ -108,7 +126,7 @@ export const DollarPrice = styled.span`
 
 export const ETHText = styled.span`
   font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
   margin-left: 5px;
   color: black;
 `;

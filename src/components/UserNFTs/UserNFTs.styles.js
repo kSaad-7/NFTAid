@@ -2,6 +2,11 @@ import styled from "styled-components";
 
 export const StyledButton = styled.button`
   // background-color: #a26cd4;
+  background: linear-gradient(
+    135deg,
+    rgba(222, 172, 242, 1) 82%,
+    rgba(255, 217, 41, 1) 82%
+  );
   background-color: #f5dcff;
   border-radius: 12px;
   border: none;
@@ -9,10 +14,9 @@ export const StyledButton = styled.button`
   min-width: 50px;
   margin-right: 4px;
   margin: 10px;
-  // color: white;
+  color: black;
   font-weight: bold;
   font-size: 12px;
-  color: black;
   cursor: pointer;
 `;
 
@@ -30,7 +34,7 @@ export const StyledCaption = styled.div`
   cursor: pointer;
   transition: box-shadow 0.6s cubic-bezier(0.1, 1, 0.1, 1);
   &:hover {
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 4px 4px black;
   }
 `;
 

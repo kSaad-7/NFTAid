@@ -10,6 +10,7 @@ import {
   BackButton,
   ToastText,
   ToastLink,
+  EditButton,
 } from "./NFTModal.styles";
 
 import { getDoc } from "firebase/firestore";
@@ -45,18 +46,27 @@ export const NFTModal = (props) => {
     </ToastText>
   );
 
-  const handleCheckoutClick = () => {
+  const handleCheckoutClick = (type) => {
     if (!currentUser) {
       toast.error(toastPrompt);
       return;
     }
-    navigate("/marketplace/checkout");
+    if (type === "edit") {
+      navigate("/marketplace/sell-nft");
+      return;
+    } else if (type === "buy") {
+      navigate("/marketplace/checkout");
+      return;
+    }
   };
 
   const handleModalClose = () => {
     props.setShowModal(false);
     setCurrentNFT(null);
   };
+
+  const isUserOwner = (currentNFT) =>
+    currentUser && currentUser.docId === currentNFT.currentOwner?.id;
 
   Modal.setAppElement(document.getElementById("root"));
 
@@ -196,9 +206,15 @@ export const NFTModal = (props) => {
           <BackButton darkOnHover onClick={handleModalClose}>
             Back
           </BackButton>
-          <CheckoutButton onClick={handleCheckoutClick}>
-            Proceed to checkout
-          </CheckoutButton>
+          {isUserOwner(currentNFT) ? (
+            <EditButton onClick={() => handleCheckoutClick("edit")}>
+              Edit Sale
+            </EditButton>
+          ) : (
+            <CheckoutButton onClick={() => handleCheckoutClick("buy")}>
+              Proceed to checkout
+            </CheckoutButton>
+          )}
         </div>
       </div>
     </Modal>
