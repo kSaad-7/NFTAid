@@ -94,6 +94,9 @@ export const ConfirmEditButton = styled.button`
   font-weight: bold;
   font-size: 15px;
   transition: box-shadow 200ms cubic-bezier(0.17, 0.67, 0.57, 0.95);
+  &:hover {
+    box-shadow: 0px 3px 3px black;
+  }
 `;
 
 export const SettingsInfoDiv = styled.div`

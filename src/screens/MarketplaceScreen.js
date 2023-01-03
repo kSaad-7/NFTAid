@@ -46,7 +46,6 @@ export const MarketplaceScreen = () => {
             nft.currentOwner?.id === currentUser?.docId && nft.onSale === false
         );
         setUsersNFTs(allUserNFTs);
-        console.log("User NFTs", allUserNFTs);
         for (let i = 0; i < allUserNFTs.length; i++) {
           count += 1;
         }

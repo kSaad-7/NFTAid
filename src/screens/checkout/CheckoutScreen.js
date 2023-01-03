@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
 import {
-  CheckoutButton,
   BackIconDiv,
   StlyedContainer,
   StlyedDiv,
@@ -25,10 +24,15 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { NFTContext, UserContext } from "../../Context";
 
 import { db } from "../../firebase.config";
-import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
+import {
+  arrayRemove,
+  arrayUnion,
+  doc,
+  updateDoc,
+  increment,
+} from "firebase/firestore";
 
-//  TODO : Change price dollar to toFixed(2).
-//  TODO : Other UI changes
+//  TODO : Introduce money aspect of system now.
 
 export const CheckoutScreen = () => {
   const [termsCheck, setTermsCheck] = useState(false);
@@ -37,17 +41,33 @@ export const CheckoutScreen = () => {
   const [showCharityModal, setShowCharityModal] = useState(false);
 
   const navigate = useNavigate();
+
   //Getting context
   const { currentNFT, currentOwnerUserName } = useContext(NFTContext);
-
   const { currentUser } = useContext(UserContext);
 
   const handleTermsChange = (e) => {
     setTermsCheck(e.target.checked);
   };
 
+  const nftPrice = currentNFT.price;
+  const charityPercent = currentNFT.percentToCharity;
+  const userMoney = currentUser.money;
+
+  const getOwnersMoney = (nftPrice, charityPercent) => {
+    let percent = 100 - charityPercent;
+    let multipler = percent / 100;
+    let ownersMoney = nftPrice * multipler;
+    return ownersMoney;
+  };
+
   const validateCheckout = () => {
-    if (!charity || !termsCheck) {
+    if (!charity || !termsCheck || userMoney < nftPrice) {
+      toast.error("Please choose a charity and accept terms and conditions.");
+      return false;
+    }
+    if (charity || termsCheck || userMoney < nftPrice) {
+      toast.error("You dont have enough money.");
       return false;
     }
     return true;
@@ -58,22 +78,27 @@ export const CheckoutScreen = () => {
     const currentUserRef = doc(db, "users", `${currentUser.docId}`);
     const currentOwnerRef = currentNFT.currentOwner;
 
+    const ownersMoney = getOwnersMoney(nftPrice, charityPercent);
+    console.log(ownersMoney);
+
     //update NFT document with new owner + onSale = false
     await updateDoc(currentNFTRef, {
       currentOwner: currentUserRef,
       onSale: false,
     });
 
-    //update old owners document, delete nft from -> nfts[]
+    //update old owners document, delete nft from -> nfts[] + money += nftPrice
     if (currentOwnerRef) {
       await updateDoc(currentOwnerRef, {
         nfts: arrayRemove(currentNFTRef),
+        money: increment(ownersMoney),
       });
     }
 
-    //update currentUser document, add new nft -> nft[]
+    //update currentUser document, add new nft -> nft[] + money -= nftPrice
     await updateDoc(currentUserRef, {
       nfts: arrayUnion(currentNFTRef),
+      money: userMoney - nftPrice,
     });
   };
 
@@ -92,7 +117,6 @@ export const CheckoutScreen = () => {
       navigate("/marketplace");
       return;
     }
-    toast.error("Please choose a charity and accept terms and conditions.");
   };
 
   return (

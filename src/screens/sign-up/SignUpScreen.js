@@ -199,7 +199,7 @@ export const SignUpScreen = () => {
             </CryptoIconsDiv>
             <span style={{ fontSize: 13 }}>
               Already have an account?{"  "}
-              <LoginText href="https://coinbase.com">Login</LoginText>
+              <LoginText href="/login">Login</LoginText>
             </span>
           </InputsDiv>
         </SignUpDiv>
