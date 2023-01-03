@@ -15,13 +15,12 @@ import { UserContext } from "../Context.js";
 
 export const MarketplaceScreen = () => {
   const [data, setData] = useState(null);
-  const [usersNFTs, setUsersNFTs] = useState(null);
   const [marketplaceNFTS, setMarketplaceNFTS] = useState(null);
   const [numberOfUserNFTs, setNumberOfUserNFTs] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [currentNFT, setCurrentNFT] = useState(null);
 
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, userNFTS, setUserNFTS } = useContext(UserContext);
 
   const getNFTData = async () => {
     try {
@@ -45,7 +44,7 @@ export const MarketplaceScreen = () => {
           (nft) =>
             nft.currentOwner?.id === currentUser?.docId && nft.onSale === false
         );
-        setUsersNFTs(allUserNFTs);
+        setUserNFTS(allUserNFTs);
         for (let i = 0; i < allUserNFTs.length; i++) {
           count += 1;
         }
@@ -84,7 +83,7 @@ export const MarketplaceScreen = () => {
       }}
     >
       <NavBar />
-      {usersNFTs && currentUser && (
+      {userNFTS && currentUser && (
         <div>
           <h5>Your NFTS ({numberOfUserNFTs})</h5>
           <div
@@ -95,10 +94,10 @@ export const MarketplaceScreen = () => {
               overflowX: "scroll",
               whiteSpace: "nowrap",
               marginBottom: 50,
-              backgroundColor: "#444",
+              backgroundColor: "#333",
             }}
           >
-            <UserNFTs usersNFTs={usersNFTs} setShowModal={setShowModal} />
+            <UserNFTs usersNFTs={userNFTS} setShowModal={setShowModal} />
           </div>
         </div>
       )}

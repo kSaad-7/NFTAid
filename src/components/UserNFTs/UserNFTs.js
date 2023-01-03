@@ -23,7 +23,7 @@ export const UserNFTs = ({ usersNFTs }) => {
         <img
           src={url}
           style={{
-            border: "2px solid black",
+            border: "2px solid white",
             borderRadius: "50%",
             width: 150,
             height: 150,

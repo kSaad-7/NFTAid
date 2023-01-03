@@ -19,6 +19,7 @@ import { NFTContext, UserContext } from "./Context.js";
 export default function App() {
   const [currentNFT, setCurrentNFT] = useState(null);
   const [currentNFTRef, setCurrentNFTRef] = useState(null);
+  const [userNFTS, setUserNFTS] = useState(null);
   const [currentOwnerUserName, setCurrentOwnerUserName] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
   const [currentUserRef, setCurrentUserRef] = useState(null);
@@ -41,6 +42,8 @@ export default function App() {
             setCurrentUser,
             currentUserRef,
             setCurrentUserRef,
+            userNFTS,
+            setUserNFTS,
           }}
         >
           <Router>

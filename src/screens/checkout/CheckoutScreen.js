@@ -62,11 +62,12 @@ export const CheckoutScreen = () => {
   };
 
   const validateCheckout = () => {
-    if (!charity || !termsCheck || userMoney < nftPrice) {
+    console.log(userMoney, nftPrice);
+    if (!charity || !termsCheck) {
       toast.error("Please choose a charity and accept terms and conditions.");
       return false;
     }
-    if (charity || termsCheck || userMoney < nftPrice) {
+    if (userMoney < nftPrice) {
       toast.error("You dont have enough money.");
       return false;
     }
