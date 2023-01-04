@@ -206,7 +206,7 @@ export const SellNftScreen = () => {
                 I agree to the{" "}
                 <span
                   id="terms_and_condtions"
-                  onClick={() => window.open("https://coinbase.com")}
+                  onClick={() => window.open("/terms-condtions")}
                 >
                   terms and condtions
                 </span>

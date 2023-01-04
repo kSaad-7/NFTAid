@@ -11,7 +11,17 @@ export const EmergencyAidScreen = () => {
       }}
     >
       <NavBar />
-      <h1>Emergency aid</h1>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "80vh",
+        }}
+      >
+        <h2 style={{ color: "grey" }}>Coming soon...</h2>
+      </div>
     </div>
   );
 };

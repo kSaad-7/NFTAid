@@ -11,6 +11,7 @@ import {
   HomeScreen,
   LoginScreen,
   CheckoutScreen,
+  TermsAndCondtionsScreen,
   SellNftScreen,
 } from "./screens/index";
 import { Toaster } from "react-hot-toast";
@@ -23,6 +24,7 @@ export default function App() {
   const [currentOwnerUserName, setCurrentOwnerUserName] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
   const [currentUserRef, setCurrentUserRef] = useState(null);
+  const [userMoney, setUserMoney] = useState(null);
 
   return (
     <div className="App">
@@ -44,12 +46,18 @@ export default function App() {
             setCurrentUserRef,
             userNFTS,
             setUserNFTS,
+            userMoney,
+            setUserMoney,
           }}
         >
           <Router>
             <Routes>
               <Route path="/" element={<HomeScreen />} />
               <Route path="marketplace" element={<MarketplaceScreen />} />
+              <Route
+                path="terms-condtions"
+                element={<TermsAndCondtionsScreen />}
+              />
               <Route path="marketplace/checkout" element={<CheckoutScreen />} />
               <Route path="marketplace/sell-nft" element={<SellNftScreen />} />
               <Route path="profile" element={<ProfileScreen />} />

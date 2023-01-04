@@ -42,9 +42,13 @@ export const AccountMenu = (props) => {
         onClose={handleClose}
         sx={{ backgroundColor: "rgba(0,0,0,0.2)" }}
       >
-        <StyledMenuItem onClick={() => handleClose("/Profile")}>
-          Profile
-        </StyledMenuItem>
+        {currentUser ? (
+          <StyledMenuItem onClick={() => handleClose("/Profile")}>
+            Profile
+          </StyledMenuItem>
+        ) : (
+          ""
+        )}
         <StyledMenuItem onClick={handleClose}>Change wallet</StyledMenuItem>
         <StyledMenuItem onClick={handleClose}>Languages</StyledMenuItem>
         {currentUser ? (

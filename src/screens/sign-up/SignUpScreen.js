@@ -95,7 +95,7 @@ export const SignUpScreen = () => {
     }
     saveNewUserFirestore();
     toast.success("You have successfully signed up.");
-    await delay(2500);
+    await delay(1500);
     navigate("/login");
   };
 
@@ -155,7 +155,7 @@ export const SignUpScreen = () => {
                 I agree to the{" "}
                 <span
                   id="terms_and_condtions"
-                  onClick={() => window.open("https://coinbase.com")}
+                  onClick={() => window.open("/terms-condtions")}
                 >
                   terms and condtions
                 </span>

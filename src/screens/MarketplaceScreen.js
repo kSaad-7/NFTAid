@@ -20,7 +20,8 @@ export const MarketplaceScreen = () => {
   const [showModal, setShowModal] = useState(false);
   const [currentNFT, setCurrentNFT] = useState(null);
 
-  const { currentUser, userNFTS, setUserNFTS } = useContext(UserContext);
+  const { currentUser, userNFTS, setUserNFTS, setUserMoney } =
+    useContext(UserContext);
 
   const getNFTData = async () => {
     try {
@@ -57,6 +58,9 @@ export const MarketplaceScreen = () => {
 
   useEffect(() => {
     getNFTData();
+    if (currentUser) {
+      setUserMoney(currentUser.money);
+    }
   }, []);
 
   if (!data)

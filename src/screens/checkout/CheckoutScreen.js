@@ -44,7 +44,7 @@ export const CheckoutScreen = () => {
 
   //Getting context
   const { currentNFT, currentOwnerUserName } = useContext(NFTContext);
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, setUserMoney } = useContext(UserContext);
 
   const handleTermsChange = (e) => {
     setTermsCheck(e.target.checked);
@@ -62,7 +62,6 @@ export const CheckoutScreen = () => {
   };
 
   const validateCheckout = () => {
-    console.log(userMoney, nftPrice);
     if (!charity || !termsCheck) {
       toast.error("Please choose a charity and accept terms and conditions.");
       return false;
@@ -101,6 +100,7 @@ export const CheckoutScreen = () => {
       nfts: arrayUnion(currentNFTRef),
       money: userMoney - nftPrice,
     });
+    setUserMoney(userMoney - nftPrice);
   };
 
   const nftTitle = (
@@ -207,7 +207,7 @@ export const CheckoutScreen = () => {
                 I agree to the{" "}
                 <span
                   id="terms_and_condtions"
-                  onClick={() => window.open("https://coinbase.com")}
+                  onClick={() => window.open("/terms-condtions")}
                 >
                   terms and condtions
                 </span>
