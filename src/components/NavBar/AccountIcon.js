@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { StyledText, AccountIconContainer } from "./NavBar.styles";
 import { AccountMenu } from "./AccountMenu/AccountMenu";
+
+import { UserContext } from "../../Context";
 
 export const AccountIcon = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -9,6 +11,8 @@ export const AccountIcon = () => {
   const handleIconHover = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const { currentUser } = useContext(UserContext);
 
   return (
     <AccountIconContainer>
@@ -24,7 +28,17 @@ export const AccountIcon = () => {
           }}
         />
       </div>
-      <StyledText>0x456...345</StyledText>
+      <StyledText>
+        {!currentUser ? (
+          <a href="/login" className="user-icon-login">
+            Login
+          </a>
+        ) : (
+          <span>
+            {currentUser.wallet.slice(0, 4)}...{currentUser.wallet.slice(9, 13)}
+          </span>
+        )}
+      </StyledText>
       <AccountMenu open={open} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
     </AccountIconContainer>
   );

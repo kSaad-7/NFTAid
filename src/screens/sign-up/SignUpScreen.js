@@ -61,7 +61,8 @@ export const SignUpScreen = () => {
         userName: signUpLog.userName,
         password: signUpLog.password,
         wallet: signUpLog.wallet,
-        money: 1000,
+        money: 10000,
+        nfts: [],
       });
       console.log("Document written with ID: ", newDocRef.id);
     } catch (e) {
@@ -70,12 +71,12 @@ export const SignUpScreen = () => {
   };
 
   const validateData = () =>
-    !signUpLog.fullName?.length ||
-    !signUpLog.email?.length ||
+    !signUpLog.fullName.length ||
+    !signUpLog.email.length ||
     !signUpLog.DOB ||
-    !signUpLog.userName?.length ||
-    !signUpLog.password?.length ||
-    !signUpLog.wallet?.length;
+    !signUpLog.userName.length ||
+    !signUpLog.password.length ||
+    !signUpLog.wallet.length;
 
   const validateTermsCheck = () => {
     if (!termsCheck) {
@@ -94,11 +95,11 @@ export const SignUpScreen = () => {
     }
     saveNewUserFirestore();
     toast.success("You have successfully signed up.");
-    await delay(2500);
+    await delay(1500);
     navigate("/login");
   };
 
-  //User age constant
+  //User age
   const userAge = parseInt(signUpLog.DOB.toString().slice(0, 4));
 
   return (
@@ -154,7 +155,7 @@ export const SignUpScreen = () => {
                 I agree to the{" "}
                 <span
                   id="terms_and_condtions"
-                  onClick={() => window.open("https://coinbase.com")}
+                  onClick={() => window.open("/terms-condtions")}
                 >
                   terms and condtions
                 </span>
@@ -198,7 +199,7 @@ export const SignUpScreen = () => {
             </CryptoIconsDiv>
             <span style={{ fontSize: 13 }}>
               Already have an account?{"  "}
-              <LoginText href="https://coinbase.com">Login</LoginText>
+              <LoginText href="/login">Login</LoginText>
             </span>
           </InputsDiv>
         </SignUpDiv>

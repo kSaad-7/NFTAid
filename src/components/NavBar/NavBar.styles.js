@@ -27,8 +27,10 @@ export const StyledText = styled.span`
   border-radius: 20px;
   padding: 5px;
   margin: -5px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: bold;
+  text-align: center;
+  min-width: 60px;
 `;
 
 export const AccountIconContainer = styled.div`

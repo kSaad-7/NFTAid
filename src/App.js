@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
   EmergencyAidScreen,
@@ -10,28 +10,70 @@ import {
   SignUpScreen,
   HomeScreen,
   LoginScreen,
+  CheckoutScreen,
+  TermsAndCondtionsScreen,
+  SellNftScreen,
 } from "./screens/index";
 import { Toaster } from "react-hot-toast";
+import { NFTContext, UserContext } from "./Context.js";
 
 export default function App() {
+  const [currentNFT, setCurrentNFT] = useState(null);
+  const [currentNFTRef, setCurrentNFTRef] = useState(null);
+  const [userNFTS, setUserNFTS] = useState(null);
+  const [currentOwnerUserName, setCurrentOwnerUserName] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUserRef, setCurrentUserRef] = useState(null);
+  const [userMoney, setUserMoney] = useState(null);
+
   return (
     <div className="App">
-      <Router>
-        <Routes>
-          <Route path="/" element={<HomeScreen />} />
-          <Route path="marketplace" element={<MarketplaceScreen />} />
-          <Route path="profile" element={<ProfileScreen />} />
-          <Route path="charities" element={<CharitiesScreen />} />
-          <Route path="artists" element={<ArtistsScreen />} />
-          <Route path="emergency-aid" element={<EmergencyAidScreen />} />
-          <Route path="sign-up" element={<SignUpScreen />} />
-          <Route path="login" element={<LoginScreen />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </Router>
+      <NFTContext.Provider
+        value={{
+          currentNFT,
+          setCurrentNFT,
+          currentNFTRef,
+          setCurrentNFTRef,
+          currentOwnerUserName,
+          setCurrentOwnerUserName,
+        }}
+      >
+        <UserContext.Provider
+          value={{
+            currentUser,
+            setCurrentUser,
+            currentUserRef,
+            setCurrentUserRef,
+            userNFTS,
+            setUserNFTS,
+            userMoney,
+            setUserMoney,
+          }}
+        >
+          <Router>
+            <Routes>
+              <Route path="/" element={<HomeScreen />} />
+              <Route path="marketplace" element={<MarketplaceScreen />} />
+              <Route
+                path="terms-condtions"
+                element={<TermsAndCondtionsScreen />}
+              />
+              <Route path="marketplace/checkout" element={<CheckoutScreen />} />
+              <Route path="marketplace/sell-nft" element={<SellNftScreen />} />
+              <Route path="profile" element={<ProfileScreen />} />
+              <Route path="charities" element={<CharitiesScreen />} />
+              <Route path="artists" element={<ArtistsScreen />} />
+              <Route path="emergency-aid" element={<EmergencyAidScreen />} />
+              <Route path="sign-up" element={<SignUpScreen />} />
+              <Route path="login" element={<LoginScreen />} />
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          </Router>
+        </UserContext.Provider>
+      </NFTContext.Provider>
       <Toaster
         toastOptions={{
-          duration: 2500,
+          duration: 3000,
           style: {
             boxShadow: "2px 2px",
             fontWeight: "bold",

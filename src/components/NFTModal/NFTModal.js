@@ -1,34 +1,91 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Modal from "react-modal";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
-import { CheckoutButton, BackButton } from "./NFTModal.styles";
-//temp
-import img from "../../images/Character_1.jpg";
 
-const contentStyles = {
-  display: "flex",
-  flex: 1,
-  flexDirection: "row",
-  width: "50%",
-  height: "50%",
-  transform: "translate(40%, 25%)",
-};
+import toast from "react-hot-toast";
 
-const overlayStyles = {
-  backgroundColor: "rgba(255, 255, 255, 0.6)",
-};
+import {
+  CheckoutButton,
+  BackButton,
+  ToastText,
+  ToastLink,
+  EditButton,
+} from "./NFTModal.styles";
+
+import { getDoc } from "firebase/firestore";
+
+import { useNavigate } from "react-router-dom";
+import { NFTContext, UserContext } from "../../Context";
+
+import { db } from "../../firebase.config";
+import { doc } from "firebase/firestore";
 
 export const NFTModal = (props) => {
-  //Function for when "back" button is clicked
+  const {
+    currentNFT,
+    setCurrentNFT,
+    setCurrentNFTRef,
+    setCurrentOwnerUserName,
+    currentOwnerUserName,
+  } = useContext(NFTContext);
+
+  const { currentUser } = useContext(UserContext);
+
+  let navigate = useNavigate();
+
+  const getNFTRef = async () => {
+    const currentNFTRef = doc(db, "nfts", `${currentNFT.docId}`);
+    setCurrentNFTRef(currentNFTRef);
+  };
+
+  const toastPrompt = (
+    <ToastText>
+      You have to be logged in to buy NFTs <br />
+      <ToastLink href="/login">Login.</ToastLink>
+    </ToastText>
+  );
+
+  const handleCheckoutClick = (type) => {
+    if (!currentUser) {
+      toast.error(toastPrompt);
+      return;
+    }
+    if (type === "edit") {
+      navigate("/marketplace/sell-nft");
+      return;
+    } else if (type === "buy") {
+      navigate("/marketplace/checkout");
+      return;
+    }
+  };
+
   const handleModalClose = () => {
     props.setShowModal(false);
-    props.setCurrentNFT(null);
+    setCurrentNFT(null);
   };
+
+  const isUserOwner = (currentNFT) =>
+    currentUser && currentUser.docId === currentNFT.currentOwner?.id;
 
   Modal.setAppElement(document.getElementById("root"));
 
-  let x = img;
+  // Getting Current Owner value from currentOwner reference
+  const getCurrentOwner = async () => {
+    const userRef = currentNFT.currentOwner;
+    if (!userRef) {
+      setCurrentOwnerUserName("N/A");
+      return;
+    }
+    const docSnap = await getDoc(userRef);
+    const userData = docSnap.data();
+    setCurrentOwnerUserName(userData.userName);
+  };
+
+  useEffect(() => {
+    getCurrentOwner();
+    getNFTRef();
+  }, []);
 
   return (
     <Modal
@@ -43,17 +100,12 @@ export const NFTModal = (props) => {
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        <div style={{ flex: 0.5 }}>
-          <span style={{ fontSize: 12, fontWeight: "bold", marginLeft: 15 }}>
-            NFT #1503
-          </span>
-        </div>
         <img
-          src={props.currentNFT.url}
-          // src={"https://i.postimg.cc/SQ8LkQvd/Character-1.jpg"}
+          src={currentNFT.url}
           style={{
             borderRadius: "10%",
             width: 200,
@@ -83,7 +135,7 @@ export const NFTModal = (props) => {
           }}
         >
           <span style={{ fontSize: 35, fontWeight: "bold", marginBottom: 20 }}>
-            {props.currentNFT.title}
+            {currentNFT.title}
           </span>
         </div>
         <div
@@ -96,19 +148,17 @@ export const NFTModal = (props) => {
           }}
         >
           <h1>
-            1.2 ETH
+            {currentNFT.ethPrice} ETH
             <span style={{ fontSize: 14, margin: "0px 10px", color: "grey" }}>
-              $200
+              ${currentNFT.price}
             </span>
           </h1>
         </div>
-        {/* !! Look at screenshot at desktop and do this !! */}
         <span style={{ fontSize: 16, marginTop: 30, fontWeight: "bold" }}>
-          Current owner: sKarma77
+          Current owner: {currentOwnerUserName}
         </span>
-        {/* !! Look at screenshot at desktop and do this !! */}
         <span style={{ fontSize: 14, marginTop: 30, fontWeight: "bold" }}>
-          Artist: {props.currentNFT.artist}
+          Artist: {currentNFT.artist}
         </span>
         <Tooltip
           title="Percent given to your chosen charity"
@@ -142,7 +192,7 @@ export const NFTModal = (props) => {
               borderRadius: 20,
             }}
           >
-            30%
+            {currentNFT.percentToCharity}%
           </span>
         </Tooltip>
         <div
@@ -156,11 +206,30 @@ export const NFTModal = (props) => {
           <BackButton darkOnHover onClick={handleModalClose}>
             Back
           </BackButton>
-          <CheckoutButton onClick={console.log("Checkout page.")}>
-            Proceed to checkout
-          </CheckoutButton>
+          {isUserOwner(currentNFT) ? (
+            <EditButton onClick={() => handleCheckoutClick("edit")}>
+              Edit Sale
+            </EditButton>
+          ) : (
+            <CheckoutButton onClick={() => handleCheckoutClick("buy")}>
+              Proceed to checkout
+            </CheckoutButton>
+          )}
         </div>
       </div>
     </Modal>
   );
+};
+
+const contentStyles = {
+  display: "flex",
+  flex: 1,
+  flexDirection: "row",
+  width: "50%",
+  height: "50%",
+  transform: "translate(40%, 25%)",
+};
+
+const overlayStyles = {
+  backgroundColor: "rgba(255, 255, 255, 0.6)",
 };
