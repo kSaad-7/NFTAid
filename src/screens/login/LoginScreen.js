@@ -28,7 +28,8 @@ export const LoginScreen = () => {
     password: "",
   });
 
-  const { setCurrentUser, setCurrentUserRef } = useContext(UserContext);
+  const { setCurrentUser, setCurrentUserRef, setUserMoney } =
+    useContext(UserContext);
 
   let navigate = useNavigate();
 
@@ -61,6 +62,8 @@ export const LoginScreen = () => {
     console.log("userRef", userRef);
     setCurrentUserRef(userRef);
     setCurrentUser({ ...userData, docId: userID });
+    const userMoney = userData.money;
+    setUserMoney(userMoney.toFixed(2));
     navigate("/marketplace");
   };
 

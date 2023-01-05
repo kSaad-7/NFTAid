@@ -74,7 +74,7 @@ export const NFTModal = (props) => {
   const getCurrentOwner = async () => {
     const userRef = currentNFT.currentOwner;
     if (!userRef) {
-      setCurrentOwnerUserName("n/a");
+      setCurrentOwnerUserName("N/A");
       return;
     }
     const docSnap = await getDoc(userRef);

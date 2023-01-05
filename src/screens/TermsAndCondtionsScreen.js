@@ -158,8 +158,11 @@ export const TermsAndCondtionsScreen = () => {
       <h4>Minors</h4>
       <p>
         We do not intentionally gather Personal Data from users who are under
-        the age of 13. Our Terms of Service require all users to be at least 18
-        years old.
+        the age of 13.
+      </p>
+      <p>
+        Our Terms of Service require all users to be at least{" "}
+        <span style={{ color: "red" }}>18</span> years old.
       </p>
     </div>
   );

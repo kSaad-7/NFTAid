@@ -58,9 +58,6 @@ export const MarketplaceScreen = () => {
 
   useEffect(() => {
     getNFTData();
-    if (currentUser) {
-      setUserMoney(currentUser.money);
-    }
   }, []);
 
   if (!data)

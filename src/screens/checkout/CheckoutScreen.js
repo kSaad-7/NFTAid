@@ -79,7 +79,6 @@ export const CheckoutScreen = () => {
     const currentOwnerRef = currentNFT.currentOwner;
 
     const ownersMoney = getOwnersMoney(nftPrice, charityPercent);
-    console.log(ownersMoney);
 
     //update NFT document with new owner + onSale = false
     await updateDoc(currentNFTRef, {
@@ -95,12 +94,13 @@ export const CheckoutScreen = () => {
       });
     }
 
+    const newUserMoney = userMoney - nftPrice;
     //update currentUser document, add new nft -> nft[] + money -= nftPrice
     await updateDoc(currentUserRef, {
       nfts: arrayUnion(currentNFTRef),
-      money: userMoney - nftPrice,
+      money: Number(newUserMoney.toFixed(2)),
     });
-    setUserMoney(userMoney - nftPrice);
+    setUserMoney(newUserMoney.toFixed(2));
   };
 
   const nftTitle = (
